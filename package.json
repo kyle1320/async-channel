@@ -7,9 +7,13 @@
   "author": "Kyle Cutler",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest --env=node --colors --coverage test",
+    "lint": "eslint --ext .js,.ts .",
     "docs": "typedoc src/index.ts"
   },
   "devDependencies": {

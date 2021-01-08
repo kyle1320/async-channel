@@ -1,0 +1,74 @@
+name: Release Pipeline
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Initialize Git
+        run: |
+          git config --global user.name "GitHub CD bot"
+          git config --global user.email "github-cd-bot@example.com"
+
+      - name: Update package version
+        run: npm version ${{ github.event.release.tag_name }}
+
+      - name: Build
+        run: yarn run build
+
+      - name: Test
+        run: yarn test
+
+      - name: Release
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit version change
+        run: git push
+        env:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
+  docs:
+    name: Update Docs website
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build docs
+        run: yarn run docs
+      
+      - name: Publish docs
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
+          CLEAN: true
