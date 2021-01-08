@@ -1,0 +1,25 @@
+{
+  "name": "achan",
+  "version": "1.0.0",
+  "description": "Send asynchronous values across concurrent lines of execution",
+  "license": "ISC",
+  "repository": "kyle1320/achan",
+  "author": "Kyle Cutler",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --env=node --colors --coverage test"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
+  }
+}

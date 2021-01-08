@@ -1,0 +1,15 @@
+{
+   "compilerOptions": {
+       "rootDir": "src",
+       "outDir": "lib",
+       "lib": ["es6"],
+       "target": "es6",
+       "module": "commonjs",
+       "declaration": true,
+       "esModuleInterop": true,
+       "incremental": true,
+       "strict": true,
+       "forceConsistentCasingInFileNames": true
+   },
+   "exclude": ["lib", "src/__tests__"]
+}
