@@ -6,6 +6,10 @@ Zero dependencies, well-tested and works in all environments supporting ES6. Und
 
 Reminiscent of Go channels (but don't let that distract you -- there are several differences).
 
+## Documentation
+
+Detailed API Documentation can be found [here](https://kyle1320.github.io/achan/).
+
 ## Basic Usage
 
 Create a Channel, passing an optional buffer capacity:
