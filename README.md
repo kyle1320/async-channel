@@ -1,5 +1,7 @@
 # AChan: JavaScript Async Channels
 
+[![Coverage Status](https://coveralls.io/repos/github/kyle1320/achan/badge.svg?branch=main)](https://coveralls.io/github/kyle1320/achan?branch=main)
+
 AChan provides iterable, `await`able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.
 
 Zero dependencies, well-tested and works in all environments supporting ES6. Under 2k minified + gzipped.
