@@ -1,0 +1,203 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Achan: JavaScript Asynchronous Channels</title>
+	<meta name="description" content="Documentation for Achan: JavaScript Asynchronous Channels">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Achan: JavaScript Asynchronous Channels</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>Project Achan: JavaScript Asynchronous Channels</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#achan-javascript-async-channels" id="achan-javascript-async-channels" style="color: inherit; text-decoration: none;">
+					<h1>AChan: JavaScript Async Channels</h1>
+				</a>
+				<p>Achan provides iterable, <code>await</code>able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.</p>
+				<p>Zero dependencies, well-tested and works in all environments supporting ES6. Under 2k minified + gzipped.</p>
+				<p>Reminiscent of Go channels (but don&#39;t let that distract you -- there are several differences).</p>
+				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
+					<h2>Basic Usage</h2>
+				</a>
+				<p>Create a Channel, passing an optional buffer capacity:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">chan</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Channel</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000"> </span><span style="color: #008000">/* default */</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>Now do some asynchronous processing. For example:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">urls</span><span style="color: #000000"> = [</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;https://www.google.com&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;https://www.microsoft.com&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;https://www.apple.com&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ...</span>
+<span style="color: #000000">];</span>
+
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">url</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">urls</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">fetch</span><span style="color: #000000">(</span><span style="color: #001080">url</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">response</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000"> = </span><span style="color: #001080">response</span><span style="color: #000000">.</span><span style="color: #795E26">text</span><span style="color: #000000">();</span>
+
+<span style="color: #000000">        </span><span style="color: #008000">// push the response body to the channel</span>
+<span style="color: #000000">        </span><span style="color: #001080">chan</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>This will fetch each URL and send the body of each response over the Channel when complete. Here, <code>text</code> is a Promise, but plain values can be pushed to a Channel as well.</p>
+				<p>Now all that&#39;s left to do is receive each result from the Channel:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">do</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">chan</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">while</span><span style="color: #000000"> (!</span><span style="color: #001080">chan</span><span style="color: #000000">.</span><span style="color: #001080">done</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>This can be written more succintly using async iteration:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">for</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">chan</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>This is a simple example -- there are many more ways to use Channels.</p>
+				<a href="#channel-closing" id="channel-closing" style="color: inherit; text-decoration: none;">
+					<h3>Channel Closing</h3>
+				</a>
+				<p>Closing a Channel is often not necessary. However it can be useful if a downstream receiver needs to know when all values have been sent to the channel. It is also necessary for async iteration to complete. In the above example, the loops will never terminate as the Channel is never closed.</p>
+				<p><code>chan.close()</code> closes the channel, preventing further values from being sent. However, any buffered values or queued senders will remain on the Channel and continue to be processed.</p>
+				<p>When all values have been received from the channel, it is considered &quot;done&quot; (<code>chan.done</code> will be <code>true</code>). At this point, any additional receivers will be rejected with a <code>ChannelClosedError</code>. If you are manually iterating over the Channel, you may want to handle this error gracefully (async iteration handles this automatically).</p>
+				<a href="#error-handling" id="error-handling" style="color: inherit; text-decoration: none;">
+					<h3>Error Handling</h3>
+				</a>
+				<p>Just as Promises can either resolve or reject, each item in a Channel can either be a value or an error.</p>
+				<p>Promises passed to <code>chan.push()</code> will result in an error on the Channel if they reject. In addition, <code>chan.throw(err)</code> can be used to send an error over the Channel.</p>
+				<p>Async iteration over a Channel will stop when an error is encountered. Otherwise, errors are treated the same as normal values -- an error will not close, empty, or otherwise adversely affect the state of a Channel.</p>
+				<a href="#receive-a-single-value" id="receive-a-single-value" style="color: inherit; text-decoration: none;">
+					<h3>Receive a Single Value</h3>
+				</a>
+				<p>Use <code>chan.get()</code> to receive a single value from a Channel. This method returns a Promise that resolves or rejects with the next value or error on the Channel:</p>
+				<pre><code class="language-js"><span style="color: #001080">chan</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">().</span><span style="color: #795E26">then</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">),</span>
+<span style="color: #000000">    </span><span style="color: #001080">error</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000">)</span>
+<span style="color: #000000">);</span>
+</code></pre>
+				<p>Channels also have a shorthand <code>then()</code> method that is compatible with Promises and <code>async</code>/<code>await</code> syntax, so the above can also be written as:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">chan</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">err</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#waiting-for-consumption" id="waiting-for-consumption" style="color: inherit; text-decoration: none;">
+					<h3>Waiting for Consumption</h3>
+				</a>
+				<p>In the above example, we simply send a value to the channel and forget about it. But sometimes it is useful to wait for the value to be received before proceeding (if you&#39;re familiar with Go channels, this should make sense to you).</p>
+				<p>For these scenarios, <code>chan.push()</code> and <code>chan.throw()</code> return a Promise that resolves when the value has been accepted by the Channel -- either when it has been inserted into the Channel&#39;s buffer (if the buffer capacity is not 0), or when it has been received.</p>
+				<a href="#multiple-receivers" id="multiple-receivers" style="color: inherit; text-decoration: none;">
+					<h3>Multiple Receivers</h3>
+				</a>
+				<p>If multiple receivers are pulling from the same Channel, only one will receive each item. This can be useful to create multiple &quot;worker threads&quot; (or coroutines) that receive and process values from a channel, and then push them into a result channel.</p>
+				<a href="#processor-utility-class" id="processor-utility-class" style="color: inherit; text-decoration: none;">
+					<h2><code>Processor</code> Utility Class</h2>
+				</a>
+				<p>In fact, this multi-receiver pattern is so useful that AChan includes a utility wrapper class for performing &quot;multi-threaded&quot; operations over Channels.</p>
+				<p>The <code>Processor</code> class makes it easy to perform functional operations such as <code>map</code> and <code>filter</code> on Channels while utilizing concurrency. For example:</p>
+				<pre><code class="language-js"><span style="color: #001080">Processor</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">(</span><span style="color: #001080">urls</span><span style="color: #000000">)               </span><span style="color: #008000">// or Processor.from(someChan)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">fetch</span><span style="color: #000000">, </span><span style="color: #0000FF">null</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">)           </span><span style="color: #008000">// Perform up to 3 requests concurrently</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">filter</span><span style="color: #000000">(</span>
+<span style="color: #000000">        </span><span style="color: #001080">res</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #001080">status</span><span style="color: #000000"> === </span><span style="color: #098658">200</span><span style="color: #000000">, </span><span style="color: #008000">// ignore non-OK status codes</span>
+<span style="color: #000000">        </span><span style="color: #001080">err</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">               </span><span style="color: #008000">// ignore errors</span>
+<span style="color: #000000">    )</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">res</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">text</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">forEach</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">));</span>
+</code></pre>
+				<p>This is similar to the above example, but limits the number of simultaneous requests to 3, and returns a Promise that resolves when all processing has been completed.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/channel.html" class="tsd-kind-icon">Channel</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/channelclearederror.html" class="tsd-kind-icon">Channel<wbr>Cleared<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/channelclosederror.html" class="tsd-kind-icon">Channel<wbr>Closed<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/processor.html" class="tsd-kind-icon">Processor</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
