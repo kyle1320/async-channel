@@ -1,6 +1,6 @@
 {
   "name": "async-channel",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Send asynchronous values across concurrent lines of execution",
   "license": "ISC",
   "repository": "kyle1320/async-channel",
