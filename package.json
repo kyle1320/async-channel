@@ -1,9 +1,9 @@
 {
-  "name": "achan",
+  "name": "async-channel",
   "version": "0.0.0",
   "description": "Send asynchronous values across concurrent lines of execution",
   "license": "ISC",
-  "repository": "kyle1320/achan",
+  "repository": "kyle1320/async-channel",
   "author": "Kyle Cutler",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -27,5 +27,15 @@
     "ts-jest": "^26.4.4",
     "typedoc": "^0.20.13",
     "typescript": "^4.1.3"
-  }
+  },
+  "keywords": [
+    "channel",
+    "coroutine",
+    "concurrent",
+    "async",
+    "await",
+    "promise",
+    "communication",
+    "parallel"
+  ]
 }

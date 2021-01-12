@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "achan": "link:..",
+        "async-channel": "link:..",
         "node-fetch": "^2.6.1"
     }
 }

@@ -1,4 +1,4 @@
-const { Processor } = require('achan');
+const { Processor } = require('async-channel');
 const fetch = require('node-fetch');
 
 const urls = [

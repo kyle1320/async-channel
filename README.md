@@ -1,8 +1,9 @@
-# AChan: JavaScript Async Channels
+# async-channel: JavaScript Async Channels
 
-[![Coverage Status](https://coveralls.io/repos/github/kyle1320/achan/badge.svg?branch=main)](https://coveralls.io/github/kyle1320/achan?branch=main)
+![CI Pipeline](https://github.com/kyle1320/async-channel/workflows/CI%20Pipeline/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/kyle1320/async-channel/badge.svg?branch=main)](https://coveralls.io/github/kyle1320/async-channel?branch=main)
 
-AChan provides iterable, `await`able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.
+async-channel provides iterable, `await`able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.
 
 Zero dependencies, well-tested and works in all environments supporting ES6. Under 2k minified + gzipped.
 
@@ -10,7 +11,7 @@ Reminiscent of Go channels (but don't let that distract you -- there are several
 
 ## Documentation
 
-Detailed API Documentation can be found [here](https://kyle1320.github.io/achan/).
+Detailed API Documentation can be found [here](https://kyle1320.github.io/async-channel/).
 
 ## Basic Usage
 
@@ -111,7 +112,7 @@ If multiple receivers are pulling from the same Channel, only one will receive e
 
 ## `Processor` Utility Class
 
-In fact, this multi-receiver pattern is so useful that AChan includes a utility wrapper class for performing "multi-threaded" operations over Channels.
+In fact, this multi-receiver pattern is so useful that async-channel includes a utility wrapper class for performing "multi-threaded" operations over Channels.
 
 The `Processor` class makes it easy to perform functional operations such as `map` and `filter` on Channels while utilizing concurrency. For example:
 

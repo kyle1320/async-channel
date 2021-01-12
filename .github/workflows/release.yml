@@ -6,7 +6,6 @@ on:
 
 jobs:
   release:
-    name: Publish to NPM
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -44,26 +43,9 @@ jobs:
         run: git push
         env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-  
-  docs:
-    name: Update Docs website
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.release.target_commitish }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - name: Install dependencies
-        run: yarn
 
       - name: Build docs
-        run: yarn run docs
+        run: yarn run docs --includeVersion
       
       - name: Publish docs
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -72,3 +54,4 @@ jobs:
           BRANCH: gh-pages
           FOLDER: docs
           CLEAN: true
+      
