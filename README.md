@@ -2,6 +2,8 @@
 
 ![CI Pipeline](https://github.com/kyle1320/async-channel/workflows/CI%20Pipeline/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/kyle1320/async-channel/badge.svg?branch=main)](https://coveralls.io/github/kyle1320/async-channel?branch=main)
+[![npm](https://img.shields.io/npm/v/async-channel)](https://www.npmjs.com/package/async-channel)
+![NPM](https://img.shields.io/npm/l/async-channel)
 
 async-channel provides iterable, `await`able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.
 
