@@ -203,7 +203,6 @@ export class Processor<T> {
    * Also handles errors by stopping all routines.
    */
   private _consume(consumer: (chan: Channel<T>) => Promise<void>, concurrency = 1): Promise<void> {
-    console.log(concurrency);
     if (concurrency <= 0 || !isFinite(concurrency)) {
       throw new RangeError('Value for concurrency must be positive and finite');
     }

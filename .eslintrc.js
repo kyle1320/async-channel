@@ -16,6 +16,7 @@ module.exports = {
         'require-await': 'error',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
+        'no-console': 'warn',
       },
     },
   ],
