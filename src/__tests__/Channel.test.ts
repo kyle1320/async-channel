@@ -1,285 +1,320 @@
-import { Channel, ChannelClearedError, ChannelClosedError } from '..';
+import { Channel } from '..';
 
 describe('Channel', () => {
-  describe('Buffered Channel', () => {
-    it('Holds up to N values', async () => {
-      const chan = new Channel(3);
-
-      await chan.push(1);
-      await chan.push(2);
-      await chan.push(3);
-
-      const promise = chan.push(4);
-      await expect(Promise.race([promise, Promise.reject(null)])).rejects.toBe(null);
-
-      expect(chan.bufferCapacity).toBe(3);
-      expect(chan.bufferSize).toBe(3);
-
-      await expect(chan.get()).resolves.toBe(1);
-      await expect(promise).resolves.toBeUndefined();
-    });
-
-    it("Doesn't buffer if a receiver is waiting", async () => {
-      const chan = new Channel(3);
-
-      await chan.push(1);
-      await expect(chan.get()).resolves.toBe(1);
-
-      const promise = chan.get();
-
-      await chan.push(2);
-      expect(chan.bufferSize).toBe(0);
-      expect(promise).resolves.toBe(2);
-    });
-
-    it('Continues holding values when closed', async () => {
-      const chan = new Channel(3);
-
-      const promises = [chan.push(0), chan.push(1), chan.push(2), chan.push(3), chan.push(4)];
-
-      expect(chan.bufferSize).toBe(3);
-
-      chan.close();
-
-      expect(chan.closed).toBe(true);
-      expect(chan.done).toBe(false);
-      expect(chan.bufferSize).toBe(3);
-
-      for (let i = 0; i < 5; i++) {
-        await expect(chan.get()).resolves.toBe(i);
-        await expect(promises[i]).resolves.toBeUndefined();
-      }
-
-      expect(chan.done).toBe(true);
-    });
-
-    it('close(true) clears all values and senders', async () => {
-      const chan = new Channel(3);
-
-      const promises = [chan.push(0), chan.push(1), chan.push(2), chan.push(3), chan.push(4)];
-
-      expect(chan.bufferSize).toBe(3);
-
-      chan.close(true);
-
-      expect(chan.closed).toBe(true);
-      expect(chan.done).toBe(true);
-      expect(chan.bufferSize).toBe(0);
-
-      for (let i = 0; i < 5; i++) {
-        if (i < 3) {
-          await expect(promises[i]).resolves.toBeUndefined();
-        } else {
-          await expect(promises[i]).rejects.toBeInstanceOf(ChannelClosedError);
-        }
-      }
-
-      await expect(chan.push(9)).rejects.toBeInstanceOf(ChannelClosedError);
-      await expect(chan.get()).rejects.toBeInstanceOf(ChannelClosedError);
-      await expect(() => chan.close()).toThrowError(ChannelClosedError);
-    });
-
-    it('Buffer can be cleared', async () => {
-      const chan = new Channel(3);
-
-      const promises = [chan.push(0), chan.push(1), chan.push(2), chan.push(3), chan.push(4)];
-
-      expect(chan.bufferSize).toBe(3);
-
-      chan.clear();
-
-      expect(chan.bufferSize).toBe(0);
-
-      for (let i = 0; i < 5; i++) {
-        if (i < 3) {
-          await expect(promises[i]).resolves.toBeUndefined();
-        } else {
-          await expect(promises[i]).rejects.toBeInstanceOf(ChannelClearedError);
-        }
-      }
-
-      const promise = chan.get();
-      chan.push(9);
-      await expect(promise).resolves.toBe(9);
-    });
-
-    it('Can buffer errors', async () => {
-      const chan = new Channel(3);
-
-      const promises = [chan.throw(0), chan.throw(1), chan.throw(2), chan.throw(3), chan.throw(4)];
-
-      expect(chan.bufferSize).toBe(3);
-
-      for (let i = 0; i < 5; i++) {
-        await expect(chan.get()).rejects.toBe(i);
-        await expect(promises[i]).resolves.toBeUndefined();
-      }
-    });
-  });
-
-  describe('Unbuffered Channel', () => {
-    it('then() works as expected', async () => {
-      const chan = new Channel<number>();
-
-      const promise = chan.then((x) => x * 2);
-      await chan.push(3);
-      await expect(promise).resolves.toBe(6);
-
-      const promise2 = chan.then(
-        (x) => x + 1,
-        (x) => x - 1
-      );
-      await chan.throw(10);
-      await expect(promise2).resolves.toBe(9);
-
-      chan.push(5);
-      expect(await chan).toBe(5);
-
-      chan.throw(7);
-      try {
-        await chan;
-        fail('Expected an error');
-      } catch (e) {
-        expect(e).toBe(7);
-      }
-    });
-
-    it('Promise flattening works as expected', async () => {
+  describe('Channel.from()', () => {
+    it('From Channel', async () => {
       const chan = new Channel();
 
-      const promises = [
-        chan.push(Promise.resolve(0)),
-        chan.push(Promise.resolve(1)),
-        chan.push(2),
-        chan.push(Promise.reject(3)),
-        chan.throw(4),
-      ];
+      let count = 0;
+      const done = chan.forEach((val) => {
+        expect(val).toBe(count);
+        count++;
+      });
 
-      for (let i = 0; i < 5; i++) {
-        if (i < 3) {
-          await expect(chan.get()).resolves.toBe(i);
-        } else {
-          await expect(chan.get()).rejects.toBe(i);
-        }
-        await expect(promises[i]).resolves.toBeUndefined();
-      }
-    });
-
-    it('Stops async iteration when an error is encountered', async () => {
-      const chan = new Channel();
-
-      const promises = [chan.push(0), chan.push(1), chan.push(2), chan.push(3), chan.throw(4), chan.push(5)];
-
-      expect(chan.bufferSize).toBe(0);
-
-      let i = 0;
-      try {
-        for await (const value of chan) {
-          expect(value).toBe(i);
-          expect(promises[i]).resolves.toBeUndefined();
-          i++;
-        }
-        fail('Expected an error');
-      } catch (e) {
-        expect(e).toBe(i);
-        expect(promises[i]).resolves.toBeUndefined();
-      }
-
-      i++;
-      await expect(chan.get()).resolves.toBe(i);
-      await expect(promises[i]).resolves.toBeUndefined();
-    });
-
-    it('Continues waiting on senders when closed', async () => {
-      const chan = new Channel();
-
-      const promises = [chan.push(0), chan.push(1), chan.push(2), chan.push(3), chan.push(4)];
-
-      expect(chan.bufferSize).toBe(0);
-
-      chan.close();
-
-      expect(chan.closed).toBe(true);
-      expect(chan.done).toBe(false);
-      expect(chan.bufferSize).toBe(0);
-
-      for (let i = 0; i < 5; i++) {
-        await expect(chan.get()).resolves.toBe(i);
-        await expect(promises[i]).resolves.toBeUndefined();
-      }
-
-      expect(chan.done).toBe(true);
-    });
-
-    it('Async iteration stops normally when closed', async () => {
-      const chan = new Channel();
-
-      const iterator = (async () => {
-        let i = 0;
-        for await (const value of chan) {
-          expect(value).toBe(i);
-          i++;
-        }
-        expect(chan.done).toBe(true);
-      })();
-
-      await chan.push(0);
-      await chan.push(1);
-      await chan.push(2);
-      await chan.push(3);
-
-      // Give the iterator time to finish.
-      // This tests the case where the iterator is already waiting on a value when the channel closes.
-      await new Promise((res) => setTimeout(res, 10));
-
-      chan.close();
-
-      await iterator;
-    });
-
-    it('Throws as error to receivers on close', async () => {
-      const chan = new Channel();
-
-      const receivers = [chan.get(), chan.get()];
-
-      chan.close();
-
-      for (const receiver of receivers) {
-        await expect(receiver).rejects.toBeInstanceOf(ChannelClosedError);
-      }
-    });
-
-    it('Can interrupt receivers', async () => {
-      const chan = new Channel();
-
-      const awaiters = [chan.get(), chan.get()];
-
-      chan.interrupt('fail');
-
-      for (const promise of awaiters) {
-        await expect(promise).rejects.toBe('fail');
-      }
-
+      chan.push(0);
       chan.push(1);
+      chan.push(2);
+      chan.close();
 
-      await expect(chan.get()).resolves.toBe(1);
+      await done;
+      expect(count).toBe(3);
+    });
+
+    it('From Array', async () => {
+      const chan = Channel.from([0, 1, 2]);
+
+      let count = 0;
+      const done = chan.forEach((val) => {
+        expect(val).toBe(count);
+        count++;
+      });
+
+      await done;
+      expect(count).toBe(3);
+    });
+
+    it('From Iterable', async () => {
+      const chan = Channel.from(new Set([0, 1, 2]));
+
+      let count = 0;
+      const done = chan.forEach((val) => {
+        expect(val).toBe(count);
+        count++;
+      });
+
+      await done;
+      expect(count).toBe(3);
+    });
+
+    it('From Array-like', async () => {
+      const chan = Channel.from({ length: 3, 0: 0, 1: 1, 2: 2 });
+
+      let count = 0;
+      const done = chan.forEach((val) => {
+        expect(val).toBe(count);
+        count++;
+      });
+
+      await done;
+      expect(count).toBe(3);
     });
   });
 
-  it('Push and pull simultaneously', async () => {
-    const chan = new Channel<number>();
-    chan.push(1);
+  describe('Channel.of()', () => {
+    it('Empty', async () => {
+      const chan = Channel.of();
 
-    // Generate Fibonacci values
-    let prev = 0;
-    for await (const val of chan) {
-      chan.push(val + prev);
-      prev = val;
+      await chan.forEach(() => fail('Expected no values'));
+    });
 
-      if (val > 20) break;
-    }
+    it('Non-empty', async () => {
+      const chan = Channel.of(0, 1, 2);
 
-    const last = await chan;
-    expect(last).toBe(34);
+      let count = 0;
+      const done = chan.forEach((val) => {
+        expect(val).toBe(count);
+        count++;
+      });
+
+      await done;
+      expect(count).toBe(3);
+    });
+
+    it('Promises', async () => {
+      const chan = Channel.of(0, 1, Promise.reject(0), Promise.resolve(2), Promise.reject(1));
+
+      let count = 0;
+      let failures = 0;
+      const done = chan.forEach(
+        (val) => {
+          expect(val).toBe(count);
+          count++;
+        },
+        (err) => {
+          expect(err).toBe(failures);
+          failures++;
+        }
+      );
+
+      await done;
+      expect(count).toBe(3);
+      expect(failures).toBe(2);
+    });
+  });
+
+  describe('Channel.transform()', () => {
+    it('Can grab multiple values from a Channel', async () => {
+      const result = await Channel.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        .transform(async (input, output) => {
+          await output.push((await input) * (await input));
+        })
+        .toArray();
+
+      expect(result).toEqual([2, 12, 30, 56, 90]);
+    });
+
+    it('Can output multiple values per input', async () => {
+      const result = await Channel.of(1, 2, 3, 4)
+        .transform(async (input, output) => {
+          const n = await input;
+          for (let i = 0; i < n; i++) {
+            await output.push(n);
+          }
+        })
+        .toArray();
+
+      expect(result).toEqual([1, 2, 2, 3, 3, 3, 4, 4, 4, 4]);
+    });
+
+    it('Can be run concurrently', async () => {
+      let count = 0;
+      let maxCount = 0;
+      const result = await Channel.of(1, 2, 3, 4, 5, 6)
+        .transform<number>(async (input, output) => {
+          count++;
+          expect(count).toBeLessThanOrEqual(3);
+          maxCount = Math.max(count, maxCount);
+
+          const n = await input;
+          for (let i = 0; i < n; i++) {
+            await output.push(n);
+          }
+
+          count--;
+        }, 3)
+        .toArray();
+
+      const plainRes = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6];
+      expect(result).not.toEqual(plainRes);
+      expect(new Set(result)).toEqual(new Set(plainRes));
+      expect(count).toBe(0);
+      expect(maxCount).toBe(3);
+    });
+
+    it('Errors are propagated', async () => {
+      const result = await Channel.of(1, 2, 3, 4)
+        .transform<number>(async (input, output) => {
+          const n = await input;
+          if (n % 2) {
+            throw n;
+          }
+          await output.push(n);
+        })
+        .map(
+          (value) => {
+            expect(value % 2).toBe(0);
+            return value;
+          },
+          (error) => {
+            expect(error % 2).toBe(1);
+            return String(error);
+          }
+        )
+        .toArray();
+
+      expect(result).toEqual(['1', 2, '3', 4]);
+    });
+
+    it('Can buffer values in the output channel', async () => {
+      const chan = Channel.of(1, 2, 3, 4, 5).transform(
+        async (input, output) => {
+          const n = await input;
+          await output.push(n);
+          await output.push(n);
+        },
+        1,
+        10
+      );
+
+      expect(chan.bufferCapacity).toBe(10);
+      await chan.onClose;
+      expect(chan.bufferSize).toBe(10);
+      expect(await chan.toArray()).toEqual([1, 1, 2, 2, 3, 3, 4, 4, 5, 5]);
+    });
+
+    it('Fails if an invalid concurrency is passed', () => {
+      expect(() => {
+        Channel.of().transform(() => Promise.resolve(), -1);
+      }).toThrow(new RangeError('Value for concurrency must be positive and finite'));
+      expect(() => {
+        Channel.of().transform(() => Promise.resolve(), Infinity);
+      }).toThrow(new RangeError('Value for concurrency must be positive and finite'));
+    });
+  });
+
+  describe('Channel.map()', () => {
+    it('Can map values and errors', async () => {
+      const result = await Channel.of(1, 2, 3, Promise.reject(4), Promise.reject(5), Promise.reject(6))
+        .map(
+          (value) => {
+            switch (value) {
+              case 1:
+                return value;
+              case 2:
+                throw value;
+              case 3:
+                return Promise.reject(value);
+            }
+          },
+          (error) => {
+            switch (error) {
+              case 4:
+                return error;
+              case 5:
+                throw error;
+              case 6:
+                return Promise.reject(error);
+            }
+          }
+        )
+        .map(
+          (value) => value,
+          (error) => error + 10
+        )
+        .toArray();
+
+      expect(result).toEqual([1, 12, 13, 4, 15, 16]);
+    });
+  });
+
+  describe('Channel.filter()', () => {
+    it('Can filter values and errors', async () => {
+      const result = await Channel.of(
+        1,
+        2,
+        3,
+        4,
+        Promise.reject(5),
+        Promise.reject(6),
+        Promise.reject(7),
+        Promise.reject(8)
+      )
+        .filter(
+          (value) => {
+            switch (value) {
+              case 1:
+                return true;
+              case 2:
+                return Promise.resolve(true);
+              case 4:
+                return Promise.reject(value);
+              default:
+                return false;
+            }
+          },
+          (error) => {
+            switch (error) {
+              case 5:
+                return true;
+              case 6:
+                return Promise.resolve(true);
+              case 8:
+                return Promise.reject(error + 10);
+              default:
+                return false;
+            }
+          }
+        )
+        .map(
+          (value) => value,
+          (error) => error + 10
+        )
+        .toArray();
+
+      expect(result).toEqual([1, 2, 14, 15, 16, 28]);
+    });
+  });
+
+  describe('Channel.forEach()', () => {
+    it('Stops receiving values on an uncaught error', async () => {
+      const chan = Channel.of(
+        new Promise((res) => setTimeout(res, 100)),
+        new Promise((res) => setTimeout(res, 100)),
+        new Promise((_, rej) => setTimeout(() => rej('fail'), 150)),
+        new Promise((res) => setTimeout(res, 200)),
+        3,
+        4
+      );
+
+      await expect(
+        chan.forEach(
+          () => {
+            // nothing needed here
+          },
+          null,
+          2
+        )
+      ).rejects.toBe('fail');
+
+      // forEach should stop early, leaving the last 2 values
+      expect(chan.bufferSize).toBe(2);
+      await expect(chan.toArray()).resolves.toEqual([3, 4]);
+    });
+  });
+
+  describe('Channel.toArray()', () => {
+    it('Fails if there are any errors on the Channel', async () => {
+      await expect(Channel.of(1, 2, 3, Promise.reject(4)).toArray()).rejects.toBe(4);
+    });
   });
 });
