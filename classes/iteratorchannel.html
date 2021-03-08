@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Channel | async-channel Documentation - v0.2.0</title>
+	<title>IteratorChannel | async-channel Documentation - v0.2.0</title>
 	<meta name="description" content="Documentation for async-channel Documentation - v0.2.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">async-channel Documentation - v0.2.0</a>
 				</li>
 				<li>
-					<a href="channel.html">Channel</a>
+					<a href="iteratorchannel.html">IteratorChannel</a>
 				</li>
 			</ul>
-			<h1>Class Channel&lt;T&gt;</h1>
+			<h1>Class IteratorChannel&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,8 +68,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A Channel extends BaseChannel and provides additional functionality.
-						This includes performing concurrent processing, serving iterators, limiting, etc.</p>
+						<p>An IteratorChannel automatically emits values from an (async-)iterable source.
+						It uses a pull-based mechanism for fetching the values -- i.e. iteration is not started until the first get() call is made.</p>
 					</div>
 				</div>
 			</section>
@@ -85,15 +85,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="basechannel.html" class="tsd-signature-type" data-tsd-kind="Class">BaseChannel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Channel</span>
-								<ul class="tsd-hierarchy">
-									<li>
-										<a href="iteratorchannel.html" class="tsd-signature-type" data-tsd-kind="Class">IteratorChannel</a>
-									</li>
-								</ul>
+								<span class="target">IteratorChannel</span>
 							</li>
 						</ul>
 					</li>
@@ -106,47 +101,47 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="channel.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="iteratorchannel.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="channel.html#_buffer" class="tsd-kind-icon">_buffer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="channel.html#_receivers" class="tsd-kind-icon">_receivers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="channel.html#_senders" class="tsd-kind-icon">_senders</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#buffercapacity" class="tsd-kind-icon">buffer<wbr>Capacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="iteratorchannel.html#_buffer" class="tsd-kind-icon">_buffer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="iteratorchannel.html#_receivers" class="tsd-kind-icon">_receivers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="iteratorchannel.html#_senders" class="tsd-kind-icon">_senders</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#buffercapacity" class="tsd-kind-icon">buffer<wbr>Capacity</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#buffersize" class="tsd-kind-icon">buffer<wbr>Size</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#closed" class="tsd-kind-icon">closed</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#done" class="tsd-kind-icon">done</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#onclose" class="tsd-kind-icon">on<wbr>Close</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#buffersize" class="tsd-kind-icon">buffer<wbr>Size</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#closed" class="tsd-kind-icon">closed</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#done" class="tsd-kind-icon">done</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#onclose" class="tsd-kind-icon">on<wbr>Close</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#_symbol_asynciterator_" class="tsd-kind-icon">[<wbr>Symbol.async<wbr>Iterator]</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="channel.html#_send" class="tsd-kind-icon">_send</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#clear" class="tsd-kind-icon">clear</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#close" class="tsd-kind-icon">close</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="channel.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="channel.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#interrupt" class="tsd-kind-icon">interrupt</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="channel.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#push" class="tsd-kind-icon">push</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="channel.html#take" class="tsd-kind-icon">take</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="channel.html#then" class="tsd-kind-icon">then</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="channel.html#throw" class="tsd-kind-icon">throw</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="channel.html#toarray" class="tsd-kind-icon">to<wbr>Array</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="channel.html#transform" class="tsd-kind-icon">transform</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="channel.html#from" class="tsd-kind-icon">from</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="channel.html#of" class="tsd-kind-icon">of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#_symbol_asynciterator_" class="tsd-kind-icon">[<wbr>Symbol.async<wbr>Iterator]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="iteratorchannel.html#_send" class="tsd-kind-icon">_send</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="iteratorchannel.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#close" class="tsd-kind-icon">close</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#filter" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="iteratorchannel.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#interrupt" class="tsd-kind-icon">interrupt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="iteratorchannel.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="iteratorchannel.html#push" class="tsd-kind-icon">push</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#take" class="tsd-kind-icon">take</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="iteratorchannel.html#then" class="tsd-kind-icon">then</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="iteratorchannel.html#throw" class="tsd-kind-icon">throw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="iteratorchannel.html#toarray" class="tsd-kind-icon">to<wbr>Array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="iteratorchannel.html#transform" class="tsd-kind-icon">transform</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static"><a href="iteratorchannel.html#from" class="tsd-kind-icon">from</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static"><a href="iteratorchannel.html#of" class="tsd-kind-icon">of</a></li>
 							</ul>
 						</section>
 					</div>
@@ -158,19 +153,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Channel&lt;T&gt;<span class="tsd-signature-symbol">(</span>bufferCapacity<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Iterator<wbr>Channel&lt;T&gt;<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, limit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iteratorchannel.html" class="tsd-signature-type" data-tsd-kind="Class">IteratorChannel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#constructor">constructor</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L45">src/index.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L476">src/index.ts:476</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Create a new Channel.</p>
+									<p>Create a new IteratorChannel.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -182,14 +177,19 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>bufferCapacity: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+									<h5>source: <span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The maximum number of items to buffer.
-										Defaults to 0; i.e. all push()/throw() calls will wait for a matching then() call.</p>
+										<p>the iterable source to take elements from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>limit: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An optional maximum number of items to take from the source before closing this Channel.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="iteratorchannel.html" class="tsd-signature-type" data-tsd-kind="Class">IteratorChannel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -201,7 +201,7 @@
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _buffer</h3>
 					<div class="tsd-signature tsd-kind-icon">_buffer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#_buffer">_buffer</a></p>
+						<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#_buffer">_buffer</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L42">src/index.ts:42</a></li>
 						</ul>
@@ -217,7 +217,7 @@
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _receivers</h3>
 					<div class="tsd-signature tsd-kind-icon">_receivers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>reject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">; </span>resolve<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#_receivers">_receivers</a></p>
+						<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#_receivers">_receivers</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L33">src/index.ts:33</a></li>
 						</ul>
@@ -233,7 +233,7 @@
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _senders</h3>
 					<div class="tsd-signature tsd-kind-icon">_senders<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>reject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">; </span>resolve<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#_senders">_senders</a></p>
+						<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#_senders">_senders</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L26">src/index.ts:26</a></li>
 						</ul>
@@ -249,7 +249,7 @@
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> buffer<wbr>Capacity</h3>
 					<div class="tsd-signature tsd-kind-icon">buffer<wbr>Capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#buffercapacity">bufferCapacity</a></p>
+						<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#buffercapacity">bufferCapacity</a></p>
 					</aside>
 				</section>
 			</section>
@@ -355,7 +355,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#_symbol_asynciterator_">[Symbol.asyncIterator]</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#_symbol_asynciterator_">[Symbol.asyncIterator]</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L193">src/index.ts:193</a></li>
 								</ul>
@@ -379,7 +379,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#_send">_send</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#_send">_send</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L219">src/index.ts:219</a></li>
 								</ul>
@@ -399,27 +399,20 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="clear" class="tsd-anchor"></a>
 					<h3>clear</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#clear">clear</a></p>
+								<p>Overrides <a href="channel.html">Channel</a>.<a href="channel.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L106">src/index.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L503">src/index.ts:503</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Clear the channel of all buffered items.
-										Also throws a <code>ChannelClearedError</code> to awaiting senders.
-									Does not close the Channel.</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -433,7 +426,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#close">close</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#close">close</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L78">src/index.ts:78</a></li>
 								</ul>
@@ -456,15 +449,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="filter" class="tsd-anchor"></a>
 					<h3>filter</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">(</span>onvalue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, onerror<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, concurrency<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, bufferCapacity<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#filter">filter</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L364">src/index.ts:364</a></li>
 								</ul>
@@ -507,15 +501,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="foreach" class="tsd-anchor"></a>
 					<h3>for<wbr>Each</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">(</span>onvalue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span>, onerror<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span>, concurrency<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#foreach">forEach</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L397">src/index.ts:397</a></li>
 								</ul>
@@ -551,27 +546,21 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#get">get</a></p>
+								<p>Overrides <a href="channel.html">Channel</a>.<a href="channel.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L122">src/index.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L507">src/index.ts:507</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Wait for the next value (or error) on this channel.</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A Promise that resolves/rejects when the next value (or error) on this channel is emitted.</p>
 						</li>
 					</ul>
 				</section>
@@ -584,7 +573,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#interrupt">interrupt</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#interrupt">interrupt</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L209">src/index.ts:209</a></li>
 								</ul>
@@ -605,15 +594,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 					<a name="map" class="tsd-anchor"></a>
 					<h3>map</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">map&lt;U, V&gt;<span class="tsd-signature-symbol">(</span>onvalue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, onerror<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, concurrency<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, bufferCapacity<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#map">map</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L323">src/index.ts:323</a></li>
 								</ul>
@@ -667,48 +657,40 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="push" class="tsd-anchor"></a>
 					<h3>push</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">push<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#push">push</a></p>
+								<p>Overrides <a href="channel.html">Channel</a>.<a href="channel.html#push">push</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L61">src/index.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L494">src/index.ts:494</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Send a new value over the channel.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The value to send, or a Promise resolving to a value.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A Promise that resolves when the value has been successfully pushed.</p>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="take" class="tsd-anchor"></a>
 					<h3>take</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">take<span class="tsd-signature-symbol">(</span>n<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#take">take</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L282">src/index.ts:282</a></li>
 								</ul>
@@ -740,7 +722,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#then">then</a></p>
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#then">then</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L154">src/index.ts:154</a></li>
 								</ul>
@@ -773,25 +755,20 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="throw" class="tsd-anchor"></a>
 					<h3>throw</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">throw<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="basechannel.html">BaseChannel</a>.<a href="basechannel.html#throw">throw</a></p>
+								<p>Overrides <a href="channel.html">Channel</a>.<a href="channel.html#throw">throw</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L70">src/index.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L499">src/index.ts:499</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Throw a new error in the channel. Note that errors are also buffered and subject to buffer capacity.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -799,19 +776,19 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A Promise that resolves when the error has been successfully thrown.</p>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="toarray" class="tsd-anchor"></a>
 					<h3>to<wbr>Array</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Array<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#toarray">toArray</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L438">src/index.ts:438</a></li>
 								</ul>
@@ -826,15 +803,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 					<a name="transform" class="tsd-anchor"></a>
 					<h3>transform</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">transform&lt;U&gt;<span class="tsd-signature-symbol">(</span>func<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, output<span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span>, concurrency<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, bufferCapacity<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#transform">transform</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L294">src/index.ts:294</a></li>
 								</ul>
@@ -898,15 +876,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
 					<a name="from" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> from</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
 						<li class="tsd-signature tsd-kind-icon">from&lt;T&gt;<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Iterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#from">from</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L254">src/index.ts:254</a></li>
 								</ul>
@@ -932,15 +911,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
 					<a name="of" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> of</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
 						<li class="tsd-signature tsd-kind-icon">of&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MaybePromise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="channel.html" class="tsd-signature-type" data-tsd-kind="Class">Channel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="channel.html">Channel</a>.<a href="channel.html#of">of</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/kyle1320/async-channel/blob/5732968/src/index.ts#L267">src/index.ts:267</a></li>
 								</ul>
@@ -985,102 +965,102 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="basechannel.html" class="tsd-kind-icon">Base<wbr>Channel</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="channel.html" class="tsd-kind-icon">Channel</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-								<a href="channel.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="channel.html#_buffer" class="tsd-kind-icon">_buffer</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="channel.html#_receivers" class="tsd-kind-icon">_receivers</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="channel.html#_senders" class="tsd-kind-icon">_senders</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#buffercapacity" class="tsd-kind-icon">buffer<wbr>Capacity</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#buffersize" class="tsd-kind-icon">buffer<wbr>Size</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#closed" class="tsd-kind-icon">closed</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#done" class="tsd-kind-icon">done</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#onclose" class="tsd-kind-icon">on<wbr>Close</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#_symbol_asynciterator_" class="tsd-kind-icon">[<wbr>Symbol.async<wbr>Iterator]</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="channel.html#_send" class="tsd-kind-icon">_send</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#clear" class="tsd-kind-icon">clear</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#close" class="tsd-kind-icon">close</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="channel.html#filter" class="tsd-kind-icon">filter</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="channel.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#get" class="tsd-kind-icon">get</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#interrupt" class="tsd-kind-icon">interrupt</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="channel.html#map" class="tsd-kind-icon">map</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#push" class="tsd-kind-icon">push</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="channel.html#take" class="tsd-kind-icon">take</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-								<a href="channel.html#then" class="tsd-kind-icon">then</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="channel.html#throw" class="tsd-kind-icon">throw</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="channel.html#toarray" class="tsd-kind-icon">to<wbr>Array</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="channel.html#transform" class="tsd-kind-icon">transform</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="channel.html#from" class="tsd-kind-icon">from</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-								<a href="channel.html#of" class="tsd-kind-icon">of</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="channelclearederror.html" class="tsd-kind-icon">Channel<wbr>Cleared<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="channelclosederror.html" class="tsd-kind-icon">Channel<wbr>Closed<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="iteratorchannel.html" class="tsd-kind-icon">Iterator<wbr>Channel</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="iteratorchannel.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="iteratorchannel.html#_buffer" class="tsd-kind-icon">_buffer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="iteratorchannel.html#_receivers" class="tsd-kind-icon">_receivers</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="iteratorchannel.html#_senders" class="tsd-kind-icon">_senders</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#buffercapacity" class="tsd-kind-icon">buffer<wbr>Capacity</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#buffersize" class="tsd-kind-icon">buffer<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#closed" class="tsd-kind-icon">closed</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#done" class="tsd-kind-icon">done</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#onclose" class="tsd-kind-icon">on<wbr>Close</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#_symbol_asynciterator_" class="tsd-kind-icon">[<wbr>Symbol.async<wbr>Iterator]</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="iteratorchannel.html#_send" class="tsd-kind-icon">_send</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="iteratorchannel.html#clear" class="tsd-kind-icon">clear</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#close" class="tsd-kind-icon">close</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#filter" class="tsd-kind-icon">filter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="iteratorchannel.html#get" class="tsd-kind-icon">get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#interrupt" class="tsd-kind-icon">interrupt</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="iteratorchannel.html#map" class="tsd-kind-icon">map</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="iteratorchannel.html#push" class="tsd-kind-icon">push</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#take" class="tsd-kind-icon">take</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="iteratorchannel.html#then" class="tsd-kind-icon">then</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="iteratorchannel.html#throw" class="tsd-kind-icon">throw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="iteratorchannel.html#toarray" class="tsd-kind-icon">to<wbr>Array</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="iteratorchannel.html#transform" class="tsd-kind-icon">transform</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+								<a href="iteratorchannel.html#from" class="tsd-kind-icon">from</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+								<a href="iteratorchannel.html#of" class="tsd-kind-icon">of</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="unsupportedoperationerror.html" class="tsd-kind-icon">Unsupported<wbr>Operation<wbr>Error</a>
 					</li>
