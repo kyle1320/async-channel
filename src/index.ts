@@ -490,10 +490,12 @@ export class IteratorChannel<T> extends Channel<T> {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public push(value: T | PromiseLike<T>): Promise<void> {
     throw new UnsupportedOperationError('Cannot push to an iterator-based Channel');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public throw(error: unknown): Promise<void> {
     throw new UnsupportedOperationError('Cannot push to an iterator-based Channel');
   }
