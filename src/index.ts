@@ -10,6 +10,12 @@ export class ChannelClosedError extends Error {}
  */
 export class ChannelClearedError extends Error {}
 
+/**
+ * Error used to indicate that an operation is not supported.
+ * This is currently used to disallow some operations in iterator-based Channels.
+ */
+export class UnsupportedOperationError extends Error {}
+
 type MaybePromise<T> = T | PromiseLike<T>;
 
 /**
@@ -17,14 +23,14 @@ type MaybePromise<T> = T | PromiseLike<T>;
  */
 export class BaseChannel<T> {
   /** List of senders waiting for a receiver / buffer space */
-  private _senders: {
+  protected _senders: {
     item: Promise<T>;
     resolve: () => unknown;
     reject: (err: any) => unknown;
   }[] = [];
 
   /** A list of receivers waiting for an item to be sent */
-  private _receivers: {
+  protected _receivers: {
     resolve: (value: MaybePromise<T>) => unknown;
     reject: (err: any) => unknown;
   }[] = [];
@@ -33,7 +39,7 @@ export class BaseChannel<T> {
   private _onClosePromise: Promise<void>;
 
   /** A list of buffered items in the channel */
-  private _buffer: Array<Promise<T>> = [];
+  protected _buffer: Array<Promise<T>> = [];
 
   /** true if the channel is closed and should no longer accept new items. */
   private _closed = false;
@@ -210,7 +216,7 @@ export class BaseChannel<T> {
   /**
    * Send the given Item. Returns a Promise that resolves when sent.
    */
-  private _send(item: Promise<T>) {
+  protected _send(item: Promise<T>): Promise<void> {
     item.catch(() => {
       // Prevent Node.js from complaining about unhandled rejections
     });
@@ -237,15 +243,20 @@ export class BaseChannel<T> {
 }
 
 /**
- * A Channel extends BaseChannel and provides additional functionality for performing concurrent processing.
+ * A Channel extends BaseChannel and provides additional functionality.
+ * This includes performing concurrent processing, serving iterators, limiting, etc.
  */
 export class Channel<T> extends BaseChannel<T> {
   /**
    * Creates a new Channel from a given source.
    * @param values An Array-like or iterable object containing values to be processed.
    */
-  public static from<T>(source: ArrayLike<MaybePromise<T>> | Iterable<MaybePromise<T>>): Channel<T> {
-    return Channel.of(...Array.from(source));
+  public static from<T>(source: ArrayLike<MaybePromise<T>> | Iterable<MaybePromise<T>> | AsyncIterable<T>): Channel<T> {
+    if ('length' in source) {
+      return new IteratorChannel(Array.from(source));
+    }
+
+    return new IteratorChannel(source);
   }
 
   /**
@@ -262,6 +273,14 @@ export class Channel<T> extends BaseChannel<T> {
     chan.close();
 
     return chan;
+  }
+
+  /**
+   * Returns a new Channel that reads up to `n` items from this Channel
+   * @param n The number of items to read from this Channel
+   */
+  public take(n: number): Channel<T> {
+    return new IteratorChannel(this, n);
   }
 
   /**
@@ -446,5 +465,74 @@ export class Channel<T> extends BaseChannel<T> {
     }
 
     return Promise.all(promises).then();
+  }
+}
+
+/**
+ * An IteratorChannel automatically emits values from an (async-)iterable source.
+ * It uses a pull-based mechanism for fetching the values -- i.e. iteration is not started until the first get() call is made.
+ */
+export class IteratorChannel<T> extends Channel<T> {
+  private readonly _iterator: Iterator<MaybePromise<T>> | AsyncIterator<T>;
+
+  /**
+   * Create a new IteratorChannel.
+   * @param source the iterable source to take elements from.
+   * @param limit An optional maximum number of items to take from the source before closing this Channel.
+   */
+  public constructor(source: Iterable<MaybePromise<T>> | AsyncIterable<T>, private limit = Infinity) {
+    super(0);
+
+    if (Symbol.asyncIterator in source) {
+      this._iterator = (source as AsyncIterable<T>)[Symbol.asyncIterator]();
+    } else {
+      this._iterator = (source as Iterable<MaybePromise<T>>)[Symbol.iterator]();
+    }
+  }
+
+  public push(value: T | PromiseLike<T>): Promise<void> {
+    throw new UnsupportedOperationError('Cannot push to an iterator-based Channel');
+  }
+
+  public throw(error: unknown): Promise<void> {
+    throw new UnsupportedOperationError('Cannot push to an iterator-based Channel');
+  }
+
+  public clear(): Promise<T>[] {
+    throw new UnsupportedOperationError('Cannot clear an iterator-based Channel');
+  }
+
+  public get(): Promise<T> {
+    if (this.limit <= 0) {
+      this.close();
+    } else {
+      this.limit--;
+    }
+    const res = super.get();
+    this._iterate();
+    return res;
+  }
+
+  private _iterating = false;
+  private async _iterate() {
+    if (!this.closed && this._iterator && this._receivers.length > 0 && !this._iterating) {
+      this._iterating = true;
+      try {
+        const it = await this._iterator.next();
+        this._iterating = false;
+
+        if (it.done) {
+          this.close();
+        } else {
+          this._send(Promise.resolve(it.value));
+          if (this._senders.length === 0) {
+            this._iterate();
+          }
+        }
+      } catch (e) {
+        this._iterating = false;
+        this._send(Promise.reject(e));
+      }
+    }
   }
 }

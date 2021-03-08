@@ -1,4 +1,4 @@
-import { Channel } from '..';
+import { Channel, ChannelClosedError } from '..';
 
 describe('Channel', () => {
   describe('Channel.from()', () => {
@@ -46,6 +46,21 @@ describe('Channel', () => {
       expect(count).toBe(3);
     });
 
+    it('From infinite Iterable', async () => {
+      const chan = Channel.from(
+        (function* () {
+          for (let i = 1; ; i *= 2) {
+            yield i;
+          }
+        })()
+      );
+
+      expect(await chan).toBe(1);
+      expect(await chan).toBe(2);
+      expect(await chan).toBe(4);
+      expect(await chan).toBe(8);
+    });
+
     it('From Array-like', async () => {
       const chan = Channel.from({ length: 3, 0: 0, 1: 1, 2: 2 });
 
@@ -57,6 +72,22 @@ describe('Channel', () => {
 
       await done;
       expect(count).toBe(3);
+    });
+
+    it('From Iterable that throws', async () => {
+      const chan = Channel.from(
+        (function* () {
+          yield 1;
+          yield 2;
+          yield Promise.reject(3);
+          throw 4;
+        })()
+      );
+
+      await expect(chan.get()).resolves.toBe(1);
+      await expect(chan.get()).resolves.toBe(2);
+      await expect(chan.get()).rejects.toBe(3);
+      await expect(chan.get()).rejects.toBe(4);
     });
   });
 
@@ -99,6 +130,49 @@ describe('Channel', () => {
       await done;
       expect(count).toBe(3);
       expect(failures).toBe(2);
+    });
+  });
+
+  describe('Channel.take()', () => {
+    it('Can limit the number of items from an infinite Channel', async () => {
+      const chan = Channel.from(
+        (function* () {
+          let i = 0;
+          while (true) yield i++;
+        })()
+      );
+
+      expect(await chan.take(4).toArray()).toEqual([0, 1, 2, 3]);
+      expect(await chan.take(4).toArray()).toEqual([4, 5, 6, 7]);
+    });
+
+    it('Can limit the number of items from a finite / buffered Channel', async () => {
+      const chan = new Channel(1);
+
+      const limited = chan.take(2);
+
+      chan.push(1);
+      chan.push(2);
+      chan.push(3);
+
+      expect(await limited).toBe(1);
+      expect(await limited).toBe(2);
+      await expect(limited).rejects.toThrow(ChannelClosedError);
+
+      expect(await chan).toBe(3);
+    });
+
+    it("Doesn't iterate any more than necessary", async () => {
+      const chan = Channel.from(
+        (function* () {
+          yield 0;
+          yield 1;
+          yield 2;
+          fail("Shouldn't get here");
+        })()
+      );
+
+      expect(await chan.take(3).toArray()).toEqual([0, 1, 2]);
     });
   });
 
