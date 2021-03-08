@@ -11,7 +11,7 @@ module.exports = {
       parserOptions: {
         sourceType: 'module',
       },
-      extends: ['plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint'],
+      extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
       rules: {
         'require-await': 'error',
         '@typescript-eslint/no-explicit-any': 'off',
