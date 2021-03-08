@@ -309,15 +309,25 @@ export class Channel<T> extends BaseChannel<T> {
   ): Channel<U | V> {
     return this.transform(
       (input, output) =>
-        input.then(
-          onvalue && (async (value) => output.push(await onvalue(value))),
-          onerror &&
-            (async (error) => {
+        input
+          .then(
+            onvalue,
+            onerror &&
+              ((error) => {
+                if (error instanceof ChannelClosedError) {
+                  throw error;
+                }
+                return onerror(error);
+              })
+          )
+          .then(
+            (value) => output.push(value),
+            (error) => {
               if (!(error instanceof ChannelClosedError)) {
-                output.push(await onerror(error));
+                return output.throw(error);
               }
-            })
-        ),
+            }
+          ),
       concurrency,
       bufferCapacity
     );
@@ -341,18 +351,16 @@ export class Channel<T> extends BaseChannel<T> {
     return this.transform(
       (input, output) => {
         return input.then(
-          onvalue &&
-            (async (value) => {
-              if (await onvalue(value)) {
-                await output.push(value);
-              }
-            }),
-          onerror &&
-            (async (err) => {
-              if (!(err instanceof ChannelClosedError) && (await onerror(err))) {
-                await output.throw(err);
-              }
-            })
+          async (value) => {
+            if (!onvalue || (await onvalue(value))) {
+              await output.push(value);
+            }
+          },
+          async (err) => {
+            if (!(err instanceof ChannelClosedError) && (!onerror || (await onerror(err)))) {
+              await output.throw(err);
+            }
+          }
         );
       },
       concurrency,

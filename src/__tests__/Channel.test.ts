@@ -235,6 +235,19 @@ describe('Channel', () => {
 
       expect(result).toEqual([1, 12, 13, 4, 15, 16]);
     });
+
+    it('Defaults to passing values as-is', async () => {
+      const result = await Channel.of(1, 2, 3).map(null).toArray();
+      expect(result).toEqual([1, 2, 3]);
+    });
+
+    it('Defaults to passing errors as-is', async () => {
+      const result = await Channel.of(1, 2, Promise.reject(3))
+        .map((a) => a * 2, null)
+        .map(null, (e) => -e)
+        .toArray();
+      expect(result).toEqual([2, 4, -3]);
+    });
   });
 
   describe('Channel.filter()', () => {
@@ -282,6 +295,20 @@ describe('Channel', () => {
         .toArray();
 
       expect(result).toEqual([1, 2, 14, 15, 16, 28]);
+    });
+
+    it('Defaults to passing all values', async () => {
+      const result = await Channel.of(1, 2, 3).filter(null).toArray();
+      expect(result).toEqual([1, 2, 3]);
+    });
+
+    it('Defaults to passing all errors', async () => {
+      const result = await Channel.of(1, 2, Promise.reject(3), Promise.reject(4))
+        .filter((a) => a === 2, null)
+        .filter(null, (e) => e === 4)
+        .map(null, (e) => e * 2)
+        .toArray();
+      expect(result).toEqual([2, 8]);
     });
   });
 
