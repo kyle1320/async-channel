@@ -3,11 +3,12 @@
 ![CI Pipeline](https://github.com/kyle1320/async-channel/workflows/CI%20Pipeline/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/kyle1320/async-channel/badge.svg?branch=main)](https://coveralls.io/github/kyle1320/async-channel?branch=main)
 [![npm](https://img.shields.io/npm/v/async-channel)](https://www.npmjs.com/package/async-channel)
-![NPM](https://img.shields.io/npm/l/async-channel)
+![license](https://img.shields.io/npm/l/async-channel)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/async-channel)
 
 async-channel provides iterable, `await`able Channels for passing asynchronous values around, as well as tools for utilizing these Channels to perform parallel processing using a simple, functional API.
 
-Zero dependencies, well-tested and works in all environments supporting ES6. Under 2k minified + gzipped.
+Zero dependencies, well-tested and works in all environments supporting ES6.
 
 Reminiscent of Go channels (but don't let that distract you -- there are several differences).
 
@@ -112,14 +113,12 @@ For these scenarios, `chan.push()` and `chan.throw()` return a Promise that reso
 
 If multiple receivers are pulling from the same Channel, only one will receive each item. This can be useful to create multiple "worker threads" (or coroutines) that receive and process values from a channel, and then push them into a result channel.
 
-## `Processor` Utility Class
+## Functional Utility Methods
 
-In fact, this multi-receiver pattern is so useful that async-channel includes a utility wrapper class for performing "multi-threaded" operations over Channels.
-
-The `Processor` class makes it easy to perform functional operations such as `map` and `filter` on Channels while utilizing concurrency. For example:
+In fact, this multi-receiver pattern is so useful that Channels have several methods for performing "multi-threaded" functional operations such as `map` and `filter` over their values, while utilizing concurrency. For example:
 
 ```js
-Processor.from(urls)               // or Processor.from(someChan)
+  Channel.from(urls)               // or any Channel
     .map(fetch, null, 3)           // Perform up to 3 requests concurrently
     .filter(
         res => res.status === 200, // ignore non-OK status codes
@@ -129,4 +128,12 @@ Processor.from(urls)               // or Processor.from(someChan)
     .forEach(text => console.log(text));
 ```
 
-This is similar to the above example, but limits the number of simultaneous requests to 3, and returns a Promise that resolves when all processing has been completed.
+This is similar to the above example, but limits the number of simultaneous requests to 3, and returns a Promise that resolves after all processing has been completed.
+
+## `BaseChannel` class
+
+If you are only using Channels for basic communication (without any of the functional methods or iterators), you can just use the `BaseChannel` class. This can be useful for tree-shaking the unused code.
+
+## `IteratorChannel` Class
+
+It can be useful to create a Channel which simply pulls its values from an iterable source. This is most useful for scenarios like the above example, where the input elements are pre-defined or easily generated
